@@ -1,0 +1,369 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+        <section class="center" data-markdown>
+          <script type="text/template">
+            # Introduction to Golang
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            # Goals
+
+            - Clarify Syntax
+            - Illustrate Cool Features
+            - Illuminate Use Case Tradeoffs
+          </script>
+        </section>
+
+        <section class="center" data-markdown>
+          <script type="text/template">
+            ## Stretch Goals
+
+            - Generate Interest!
+
+            <br />
+            ### Further Stretch
+
+            - Rewrite EVERYTHING!
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ## Outline
+            
+            - High level features
+            - Syntax through examples
+            - Standard library and tooling
+            - Good use cases
+            - Bad use cases
+            - Let's write some stuff!!
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ## Overview
+            
+            - Opinionated
+            - Statically Typed
+            - Compiled
+            - Garbage Collected
+            - C style syntax
+            - Good concurrency mechanisms
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            > It's a fast, statically typed, compiled language that feels like a dynamically typed, interpreted language.
+
+            golang.org/doc
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            # Examples
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ### helloworld.go
+
+            ```go
+package main
+
+import "fmt"
+
+func main() {
+	fmt.Println("hello world")
+}
+            ```
+
+            ```sh
+            $ go run helloworld.go
+            > hello world
+            ```
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ### hello2world.go
+
+            ```go
+package main
+
+import "fmt"
+
+const world = "world"
+
+func main() {
+	var hello = "hello"
+
+	fmt.Printf("%s %s\n", hello, world)
+}           
+            ```
+          </script>
+        </section>
+
+
+        <section data-markdown>
+          <script type="text/template">
+            ### hello2world2.go
+
+            ```go
+package main
+
+import "fmt"
+
+const world = "world"
+
+func main() {
+	// Look below here!
+	hello := "hello"
+	// Look above here!
+
+	fmt.Printf("%s %s\n", hello, world)
+}           
+            ```
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ### readfile.go
+
+            ```go
+package file
+
+import "io/ioutil"
+
+func Read(name string) ([]byte, error) {
+	bts, err := ioutil.ReadFile(name)
+	if err != nil {
+		return nil, err
+	}
+
+	return bts, nil
+}
+            ```
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ### h3lloworld.go
+
+            ```go
+package main
+
+import (
+	"fmt"
+
+	"./file"
+)
+
+func main() {
+	bts, _ := file.Read("helloworld.txt")
+	fmt.Println(bts)
+}
+            ```
+
+            ### helloworld.txt
+
+            ```txt
+hello world
+            ```
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ### Directory Tree
+
+            ```sh
+$ ls -l
+> file/
+>      readfile.go
+> h3lloworld.go
+> helloworld.txt
+            ```
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ### Output 
+
+            ```sh
+$ go run h3lloworld.go
+> [104 101 108 108 111 32 119 111 114 108 100 10]
+            ```
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ### helloworld4.go
+
+            ```go
+package main
+
+import (
+	"fmt"
+
+	"./file"
+)
+
+func main() {
+	bts, _ := file.Read("helloworld.txt")
+	fileStr := string(bts)
+	fmt.Println(fileStr)
+}
+            ```
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ### Output 
+
+            ```sh
+$ go run helloworld4.go
+> hello world
+            ```
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ## vector.go
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ## loops.go
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ## channels.go
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ## Other Really Cool Things
+
+            - [Standard Library](https://golang.org/pkg/)
+            - [Testing](https://github.com/ifo/dev.journal/blob/master/entry/entry_test.go)
+            - [Better Testing]()
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ## Good Use Cases
+
+            - api servers
+            - heavily concurrent programs
+            - things that need to [go fast](https://github.com/ifo/sanic/)
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ## Bad Use Cases
+
+            - scripting
+            - CRUD servers
+            - ORMs
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ## Project 1 - webserver
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ## Project 2 - file hasher
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            # Thanks!
+          </script>
+        </section>
+
+        <section data-markdown>
+          <script type="text/template">
+            ## References
+
+            * [Learn X in Y minutes (for Go)](https://learnxinyminutes.com/docs/go/)
+            * [Tour of Go](https://tour.golang.org/welcome/1)
+            * [Go Concurrency Patterns: Pipelines and cancellation](https://blog.golang.org/pipelines)
+            * [Go http package](https://golang.org/pkg/net/http/)
+            * [Go standard library](https://golang.org/pkg/)
+          </script>
+        </section>
+
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+        //center: false,
+        controls: false,
+        history: true,
+        progress: false,
+        transition: 'none',
+
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
